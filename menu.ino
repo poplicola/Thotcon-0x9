@@ -96,7 +96,7 @@ void showMenu(){
    u8g2.drawStr(5,34,"25k");
     u8g2.drawStr(29,34,"50k");
     u8g2.drawStr(56,34,"1m");
-    //u8g2.drawStr(7,55,"1m");
+    u8g2.drawStr(7,55,"Jon");
     //u8g2.drawStr(30,55,"1m");
     //u8g2.drawStr(56,55,"1m");
 

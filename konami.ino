@@ -34,17 +34,6 @@ void konami(){
       states[index_state]=5;
     }
     index_state++;
-
-    Serial.println(states[0]);
-    Serial.println(states[1]);
-    Serial.println(states[2]);
-    Serial.println(states[3]);
-    Serial.println(states[4]);
-    Serial.println(states[5]);
-    Serial.println(states[6]);
-    Serial.println(states[7]);
-    Serial.println(states[8]);
-    Serial.println(states[9]);
  
     if(index_state>=10){
       if(states[0]==0 && states[1]==0 && states[2]==1 && states[3]==1 && states[4]==2 && states[5]==3 && states[6]==2 && states[7]==3 && states[8]==4 && states[9]==5){
