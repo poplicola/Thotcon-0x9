@@ -1,15 +1,8 @@
-/*
- * buy wifi
- * buy new games
- * 
- */
-
 void thotstore(){
   int8_t menuItemsCount = 3;
   EEPROM.get(0,thotcoin_counter);
   pickaxe=EEPROM.read(20);
   wifi=EEPROM.read(21);
-  
   buttonStateEnter = digitalRead(buttonPinEnter);
   u8g2.firstPage();
   do {
@@ -20,8 +13,6 @@ void thotstore(){
     u8g2.setFontRefHeightAll();
     u8g2.setDrawColor(2);
     u8g2.setFontMode(1);
-    //u8g2.setCursor(0,0);
-    
     if(pickaxe==0 || pickaxe==255){// Change this to 255 before putting on badge REMOVE
       drawMenu("THOTCOIN STORE", curMenuItem, "Pick Axe x2 -$5\nLOCKED\nLOCKED", menuItemsCount, 1);
     } else if(pickaxe==5){
@@ -35,7 +26,6 @@ void thotstore(){
     }
     
     // 0 = pick axe x2, 1 = pick axe x3, 2 = pick axe x4
-
     if (buttonStateEnter != lastcoinstate) {
       if(curMenuItem==0 && thotcoin_counter>=5 && buttonStateEnter==LOW){
         thotcoin_counter=thotcoin_counter-5;
@@ -61,19 +51,11 @@ void thotstore(){
       delay(50);
     }
     lastcoinstate = buttonStateEnter;
-
     u8g2.drawBox(0,0,102,10);
     u8g2.setCursor(0,8);
     u8g2.print(str);
     u8g2.setCursor(50,8);
     u8g2.print("Coin");
-    
     buttonPress(menuItemsCount);
-    
-    /*
-     * This is where the store menu goes
-     * MENU BACK
-     */
-
   } while (u8g2.nextPage() );  
 }

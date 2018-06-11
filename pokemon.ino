@@ -1,9 +1,3 @@
-/*
- * buy wifi
- * buy new games
- * 
- */
-
 void pokemon(){
   internet();
   int8_t menuItemsCount = 6;
@@ -33,13 +27,5 @@ void pokemon(){
       delay(50);
     }
     lastcoinstate = buttonStateEnter;
-    
-    //buttonPress(MenuItemsCount);
-    
-    /*
-     * This is where the store menu goes
-     * MENU BACK
-     */
-
   } while (u8g2.nextPage() );
 }

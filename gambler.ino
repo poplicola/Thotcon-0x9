@@ -1,10 +1,6 @@
-
 void casino() {
-  //delay(3000);  // connect, get your random number, maybe you loose or win some coin based on odd or even.  The terrible float math brings variances on the order of tens to hundreds
-  // if (!client.connected()) {
   u8g2.setFont(u8g2_font_5x8_mr);
   if (client.connect(host, 42782)) {
-    //delay(500);
     long coin = client.parseInt();
     if (delayTrigger > 0) {
        u8g2.firstPage();
@@ -33,16 +29,11 @@ void casino() {
     do {
         if (coin % 2)
         {
-          u8g2.drawStr(20, 30, "Win coin: ");
-          
-           
+          u8g2.drawStr(20, 30, "Win coin: ");   
         }
         else {
           u8g2.drawStr(20, 30, "Lost coin: ");
-          
-           
         }
-       
         }while(u8g2.nextPage());
       } 
   if (flipCompleted){

@@ -1,49 +1,15 @@
 #include <EEPROM.h>
-
 #include <U8g2lib.h>
 #include <U8x8lib.h>
 #include <Metro.h>
 #include <Space_Invaders.h>
 #include <Adafruit_GFX.h>
 #include <ESP8266WiFi.h>
-/*
-#include <ESP8266WiFiAP.h>
-#include <ESP8266WiFiGeneric.h>
-#include <ESP8266WiFiMulti.h>
-#include <ESP8266WiFiScan.h>
-#include <ESP8266WiFiSTA.h>
-#include <ESP8266WiFiType.h>
-#include <WiFiClient.h>
-#include <WiFiClientSecure.h>
-#include <WiFiServer.h>
-#include <WiFiServerSecure.h>
-#include <WiFiUdp.h>
-*/
-
-/*    
- * EEPROM BIT SPACES    
- * 0 = THOTCOIN   
- * 20 = PICK AXE    
- * 21 = UNLOCK WIFI   
- * 22 = coin_n (the multiplier for getting thotcoin)    
- * 30 = Game 1
- * 31 = Game 2
- * 32 = Game 3
- * 33 = Game 4
- * 34 = Game 5
- * 35 = Game 6
- * 36 = Game 7
- * 37 = Game 8
- * 38 = Game 9
- */ 
 #include <dummy.h>
 
 const char* ssid     = "attwifi";
 const char* password = NULL;
 const char* host = "irl.depaul.edu";
-//const char* host2 = "
-//const char* host = "172.20.10.2";
-
 WiFiClient client;
 
 
@@ -204,7 +170,6 @@ int lastButtonStateEnter = 0;
 
 Metro s = Metro(300), b = Metro(150), e = Metro(1000);
 
-// U8G2_UC1701_EA_DOGS102_1_4W_SW_SPI u8g2(14, 13, 15, 12);   // SPI Com: SCK = 13, MOSI = 11, CS = 10, A0 = 9
 U8G2_UC1701_EA_DOGS102_1_4W_SW_SPI u8g2(U8G2_R0, 14, 13, 15, 12);
 //pin for Left button
 const int buttonPinL = 0;
@@ -275,7 +240,7 @@ void buttonThree(int8_t menuItemsCountTemp) {
     // curMenuItem++;
   }
 }
-/* Check what buttons are pressed0 */
+/* Check what buttons are pressed */
 void buttonPress(int8_t menuItemsCountTemp) {
   buttonStateL = digitalRead(buttonPinL);
   buttonStateR = digitalRead(buttonPinR);
@@ -299,12 +264,9 @@ void buttonPress(int8_t menuItemsCountTemp) {
     }
   }
 }
-/* Draws a VERY BASIC menu that the user can navigate up and down on. Haven't established WiFi options or selection input yet */
-void drawMenu(const char *title, uint8_t start_pos, const char *line, uint8_t m_items, uint8_t heading) {
-  //u8g2.firstPage(); //The code this is sampled from uses clear buffer, it doesn't work with our screen though so we use firstPage
-  /*do {*/
-    byte x {0}; byte y {0};
 
+void drawMenu(const char *title, uint8_t start_pos, const char *line, uint8_t m_items, uint8_t heading) {
+    byte x {0}; byte y {0};
     u8g2.setFont(u8g2_font_5x7_mf);
     u8g2.setFontRefHeightAll();
     x = (100 - u8g2.getStrWidth(title)) / 2;
@@ -328,18 +290,16 @@ void drawMenu(const char *title, uint8_t start_pos, const char *line, uint8_t m_
       y = y + 2 + u8g2.getAscent() - u8g2.getDescent();
       u8g2.drawStr(x, y, msg);
     }
- /* } while (u8g2.nextPage() ); */
 }
-/*Basic method that can check if the left and right buttons at the same time, exiting to the menu */
+
+/*Exits to the main menu if left and right buttons are pressed*/
 void checkDoublePress() {
   buttonStateL = digitalRead(buttonPinL);
   buttonStateR = digitalRead(buttonPinR);
   if(buttonStateL == LOW && buttonStateR == LOW){
     menuPricing = true;
-    menuActive = true;
-    
+    menuActive = true;  
   }
-  
 }
 
 
@@ -347,12 +307,14 @@ void setup(void) {
   for (int n = 0; n < 10; n++){
    states[n] = 0; // Unpressed
   }
-  //Check your serial monitor to see if it is set to 115200 read speed, things might not read well if not
+  //Serial monitor must be set to 115200 read speed
   Serial.begin(115200);
   EEPROM.begin(512);
-  //use the line below to erase coins
+  
+  //Use the lines below to erase coins
   //EEPROM.put(0,0);
   //EEPROM.commit();
+  
   EEPROM.get(0,thotcoin_counter);
   Serial.println(EEPROM.read(21));
  if(thotcoin_counter<0){
@@ -372,13 +334,7 @@ void setup(void) {
     EEPROM.write(100,1);
     EEPROM.commit();
   }
-  /*giving myself a bunch of coins for testing. REMOVE for final version */
-  
-  /*
-  WiFi.disconnect(true); delay(1); // disable WIFI altogether
-  WiFi.mode(WIFI_OFF); delay(1);
-  WiFi.forceSleepBegin(); delay(1);
-*/
+ 
   delay(100);
   counterForWifi = 0;
   //Pullup enables the internal resistor pull up for each pin
@@ -388,35 +344,12 @@ void setup(void) {
   bootCounter = 0;
   u8g2.begin(buttonPinEnter, U8X8_PIN_NONE, U8X8_PIN_NONE, buttonPinL, buttonPinR, U8X8_PIN_NONE);
   initGame(level);
-  //ESP.wdtDisable();
-  
-  //Serial.print("Connecting to ");
-  //Serial.println(ssid);
-  
-  WiFi.begin(ssid, password);
  
-  /*
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    //Serial.print(".");
-  }
-  */
-  //Serial.println("");
-  //Serial.println("WiFi connected");  
-  //Serial.println("IP address: ");
-  //Serial.println(WiFi.localIP()); 
-  
+  WiFi.begin(ssid, password);
 }
 
 
 void loop(void) {
- // Serial.println(ESP.getFreeHeap());
-
-/*    
-This creates the unique identifier based on MAC address   
-Serial.println(makeMD5(WiFi.macAddress()));     
-*/
-
   runBoot();
   checkDoublePress();
   if (menuActive) {
@@ -445,10 +378,8 @@ Serial.println(makeMD5(WiFi.macAddress()));
    konami();
   }
   else if(menuSelection == 7){
-   //rudy
   }
   else if(menuSelection == 8){
-   //final
   }
   else if(menuSelection == 9){
     internet();

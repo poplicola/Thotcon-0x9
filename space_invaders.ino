@@ -9,7 +9,7 @@ void initGame(int lvl) {
   }
   else {
     ship->setX(51);
-    ship->setY(62); //reset ship position
+    ship->setY(62); //Reset ship position
   }
   //Enemy initialization
   for (int i = 1; i <= 4; i++) {
@@ -17,7 +17,7 @@ void initGame(int lvl) {
       enemy[(i - 1) * 3 + j - 1] = new Enemy(10 * i + 2, 30 - 9 * (j - 1), lvl);
     }
   }
-  //draw the level
+  //Draw the level
   drawShip(ship->getX(), ship->getY());
   drawLives(ship->getLives());
   for (int i = 0; i < nr_enemy; i++) {
@@ -35,12 +35,8 @@ void drawEnemy(int x, int y) {
   u8g2.drawBox(x - 3, y - 2, 7, 3);
   u8g2.drawPixel(x - 3, y + 1);
   u8g2.drawPixel(x - 3, y + - 3);
-  //u8g2.drawPixel(x - 3, y + 3);
   u8g2.drawPixel(x + 3, y + 1);
   u8g2.drawPixel(x + 3, y - 3);
-  //u8g2.drawVLine(x - 3, y - 1, 3);
-  //u8g2.drawPixel(x - 1, y - 1);
-  //u8g2.drawPixel(x - 1, y + 1);
 }
 
 
@@ -60,7 +56,6 @@ void moveShip() {
 
 void moveBullet() {
   if (ShipBullet->getExist() == 1) {
-    //the bullet exists
     u8g2.drawHLine(ShipBullet->getX(), ShipBullet->getY(), 3);
     ShipBullet->move();
     u8g2.drawHLine(ShipBullet->getX(), ShipBullet->getY(), 3);
@@ -71,7 +66,7 @@ void moveBullet() {
       }
     }
   }
-  if (EnemyBullet->getExist() == 1) {//the bullet exists
+  if (EnemyBullet->getExist() == 1) {
     u8g2.drawHLine(EnemyBullet->getX(), EnemyBullet->getY(), 3);
     EnemyBullet->move();
     u8g2.drawVLine(EnemyBullet->getX() + 3, EnemyBullet->getY(), 5);
@@ -94,15 +89,11 @@ int remaining_enemys() {
 
 void moveEnemy() {
   bounce = 0;
-  //Serial.print("before loop: ");
-          //Serial.println(ESP.getFreeHeap());
-  for (int i = 0; i < nr_enemy; i++) { //le misc
+  for (int i = 0; i < nr_enemy; i++) { 
     if (bounce == 0 && enemy[i]->Alive() == true && enemy[i]->move() == 1) {
-      for (int j = 0; j < nr_enemy; j++) { //schimb directia la toti ceilalti
+      for (int j = 0; j < nr_enemy; j++) {
         if (j < i) {
-          
           enemy[j]->update(1);
-          
         }
         else if (j > i) {
           enemy[j]->update(0);
@@ -111,8 +102,6 @@ void moveEnemy() {
       bounce = 1;
     }
   }
-  //Serial.print("after loop: ");
-          //Serial.println(ESP.getFreeHeap());
 }
 void drawShips() {
   drawShip(ship->getX(), ship->getY());
@@ -121,7 +110,6 @@ void drawShips() {
     if (enemy[i]->Alive()) { //daca inamicul na fost doborat inca
       drawEnemy(enemy[i]->getX(), enemy[i]->getY()); //il desenez
       if (enemy[i]->Defeat()) {
-        //play = 2;
       }
 
       if ((int)random(chance_shoot) == 0) { //enemy shoots bullet
@@ -129,7 +117,7 @@ void drawShips() {
       }
     }
   }
-  //bullets
+ 
   if (ShipBullet->getExist() == 1) {
     u8g2.drawVLine(ShipBullet->getX(), ShipBullet->getY(), 3);
   }
@@ -151,7 +139,6 @@ void drawL(int x, int y) {
   u8g2.drawPixel(x + 3, y + 4);
 }
 void addBullet(byte x, byte y, byte newSpeed, char side) {
-  //  side == 1 -> my ship, else enemy ship
   if (side == 1 && ShipBullet->getExist() == 0) {
     ShipBullet = new Bullet(x, y, newSpeed);
   }
@@ -160,11 +147,7 @@ void addBullet(byte x, byte y, byte newSpeed, char side) {
   }
 }
 
-void showPause() {
-  // display.clearDisplay();
-  //display.drawBitmap(30, 8, pause, 8, 32);
-  // display.display();
-}
+
 void displayScore( int score){
   u8g2.setFont(u8g2_font_5x8_mr);
   u8g2.setCursor(75, 6);
@@ -202,12 +185,9 @@ void runSpaceInvaders() {
         }
         else if(remaining_enemys() == 0){
           u8g2.setFont(u8g2_font_profont22_tf);
-          //u8g2.drawStr(30,30,"YOU");
-          //u8g2.drawStr(28,40,"WIN!");
           u8g2.setFont(u8g2_font_5x8_mr);
           u8g2.drawStr(10,10,"Unlocked DLC:");
           u8g2.drawStr(10,30,"thotcon.org/dlc");
-          
           EEPROM.write(31,2);
           EEPROM.commit();
         }
@@ -215,11 +195,9 @@ void runSpaceInvaders() {
     }
     else if (play == 1) {
       buttonsPressed();
-      showPause();
 
     }
     else {
-      //displayScore(score);
       buttonsPressed();
 
     }
@@ -228,7 +206,7 @@ void runSpaceInvaders() {
   if (ship ->getLives() == 0) {
           delay(3000);
           menuActive = true;
-          play=0; // this should fix the bug where you have to reset the entire device
+          play=0; 
           level = 1;
           initGame(level);
         }

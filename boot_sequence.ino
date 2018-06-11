@@ -1,4 +1,4 @@
-// Morse saying thotcon
+//Morse saying thotcon
 const char* thotconMorse0 = "- .... --- - -.-. --";
 const char* thotconMorse0Temp = "                    ";
 const char* thotconMorse1 = "- - - .... --- - -.-";
@@ -565,7 +565,6 @@ void runBoot(){
   if(bootCounter == 0){
     morse_display();
     delay(1300);
-    //Serial.println("boot count");
   }
   else if(bootCounter == 1){
     binary_display();

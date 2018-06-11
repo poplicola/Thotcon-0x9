@@ -9,10 +9,6 @@ void konami(){
     drawMenu("POKEMON", curMenuItem, "Up\nDown\nLeft\nRight\nA\nB", menuItemsCount,0);
     buttonPress(menuItemsCount);
   } while (u8g2.nextPage() );
-  
-  // REMEMBER TO THROW IN DE-DUPE FOR BUTTONS
-  // 0 0 1 1 2 3 2 3 4 5
-  
 
   if(buttonStateEnter==LOW){
     if(curMenuItem==0){

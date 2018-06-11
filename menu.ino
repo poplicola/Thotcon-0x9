@@ -23,9 +23,7 @@ void buttonsPressed() {
     lastButtonStateR=buttonStateR;
      if(buttonStateEnter != lastButtonStateEnter){
       if(buttonStateEnter==LOW){
-   //     menuActive = false;
-                  //Serial.println(level_check(200,33));
-       if(menuSelection == 0){
+        if(menuSelection == 0){
         menuActive = false;
        }
        else if (menuSelection == 1){
@@ -97,8 +95,6 @@ void showMenu(){
     u8g2.drawStr(29,34,"50k");
     u8g2.drawStr(56,34,"1m");
     u8g2.drawStr(7,55,"Jon");
-    //u8g2.drawStr(30,55,"1m");
-    //u8g2.drawStr(56,55,"1m");
 
     u8g2.setFont(u8g2_font_helvB12_tf);
     u8g2.setFontMode(1);
